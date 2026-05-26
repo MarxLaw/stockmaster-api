@@ -1,18 +1,19 @@
 const mysql = require("mysql2");
+require("dotenv").config();
 
 const db = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "p@ssw0rd",
-  database: "stockmaster",
-  port: 3306,
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: parseInt(process.env.DB_PORT) || 3306,
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT) || 10,
   queueLimit: 0,
 });
 
 db.query("SELECT @@hostname, @@port, DATABASE() AS db", (err, rows) => {
-  console.log("API is connected to:", rows[0]);
+  if (!err) console.log("API is connected to:", rows[0]);
 });
 db.query("SELECT id, name FROM products LIMIT 5", (err, rows) => {
   console.log("Error:", err?.message);

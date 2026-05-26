@@ -1,4 +1,5 @@
 require("dotenv").config();
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
 const express = require("express");
 const cors = require("cors");
 const http = require("http");
@@ -21,8 +22,8 @@ app.use("/activity", require("./routes/activity"));
 app.use("/suppliers", require("./routes/suppliers"));
 app.use("/purchase-orders", require("./routes/purchaseOrders"));
 app.use("/categories", require("./routes/categories"));
-
-//app.use("/reports", require("./routes/reports"));
+app.use("/users", require("./routes/users"));
+app.use("/reports", require("./routes/reports"));
 
 // ── Start ─────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
